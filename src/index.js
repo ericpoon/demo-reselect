@@ -3,8 +3,8 @@ import { createSelector } from './reselect';
 const sum = createSelector((n) => {
   return n;
 }, (n) => {
-  let sum = 1;
-  for (let i = 1; i <= n; i++) {
+  let sum = 0;
+  for (let i = 0; i <= n; i++) {
     sum += i;
   }
   return sum;
