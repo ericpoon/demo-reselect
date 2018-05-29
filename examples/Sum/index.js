@@ -4,9 +4,7 @@ import { createSelector } from '../../src/reselect';
 
 class Main extends Component {
   calculatingSum = () => {
-    const sum = createSelector((n) => {
-      return n;
-    }, (n) => {
+    const sum = createSelector(n => n, n => {
       let sum = 0;
       for (let i = 0; i <= n; i++) {
         sum += i;
