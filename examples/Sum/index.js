@@ -15,15 +15,15 @@ class Main extends Component {
     console.log('********** Start calculating sum **********');
 
     console.time('first run');
-    console.log('\nsum(1000000000) = ' + sum(1000000000));
+    console.log('\nsum = ' + sum(1000000000));
     console.timeEnd('first run');
 
     console.time('second run');
-    console.log('\nsum(1000000000) = ' + sum(1000000000));
+    console.log('\nsum = ' + sum(1000000000));
     console.timeEnd('second run');
 
     console.time('third run');
-    console.log('\nsum(1000000000) = ' + sum(1000000000));
+    console.log('\nsum = ' + sum(1000000000));
     console.timeEnd('third run');
   };
 
@@ -33,6 +33,7 @@ class Main extends Component {
         <h2>Demo - Reselect</h2>
         <p>Calculate: sum 1+2+...+1000000000</p>
         <button onClick={this.calculatingSum}>Start</button>
+        <p><i style={{ color: 'orangered' }}>Open console to see the calculation</i></p>
       </div>
     );
   }
