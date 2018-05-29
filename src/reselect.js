@@ -21,9 +21,9 @@ export function createSelector(...selectors) {
     }
 
     if (!inputUnchanged) {
-      const finalSelector = selectors[selectors.length - 1];
+      const outputSelector = selectors[selectors.length - 1];
       prevInput = input;
-      prevOutput = finalSelector(...input);
+      prevOutput = outputSelector(...input);
     }
     return prevOutput;
   };
