@@ -13,7 +13,7 @@ export function createSelector(...selectors) {
       inputUnchanged = false;
     } else {
       for (let i = 0; i < input.length; i++) {
-        if (!shallowObjectEqual(input[i], prevInput[i])) {
+        if (!referenceEqual(input[i], prevInput[i])) {
           inputUnchanged = false;
           break;
         }
@@ -27,6 +27,10 @@ export function createSelector(...selectors) {
     }
     return prevOutput;
   };
+}
+
+function referenceEqual(a, b) {
+  return a === b;
 }
 
 function shallowObjectEqual(a, b) {
