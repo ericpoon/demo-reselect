@@ -1,4 +1,8 @@
-import { createSelector } from '../src/reselect';
+import {
+  createSelector,
+  createSelectorCreator,
+  shallowObjectEqual,
+} from '../src/reselect';
 
 it('accepts only one selector', () => {
   const inputSelector = jest.fn((x) => x * 2);
@@ -84,5 +88,38 @@ describe('returns the cached output if input does not change', () => {
     expect(inputSelectorB).toHaveBeenCalledTimes(2);
     expect(inputSelectorC).toHaveBeenCalledTimes(2);
     expect(outputSelector).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('works well for objects', () => {
+  it('returns the same resulted object when the input objects are the same', () => {
+    const fooSelector = createSelector(i => i.foo, i => ({ a: i.a, b: i.b }));
+    const obj = { foo: { a: 1, b: 2, c: 'str' } };
+
+    const x = fooSelector(obj);
+    const y = fooSelector(obj);
+
+    expect(x).toBe(y);
+    expect(x).toEqual(y);
+  });
+
+  it('does not return the same resulted object when the input objects are different (though shallowly equal)', () => {
+    const fooSelector = createSelector(i => i.foo, i => ({ a: i.a, b: i.b }));
+    const x = fooSelector({ foo: { a: 1, b: 2, c: 'str' } });
+    const y = fooSelector({ foo: { a: 1, b: 2, c: 'str' } });
+
+    expect(x).not.toBe(y);
+    expect(x).toEqual(y);
+  });
+
+  it('returns the same resulted object when the input objects are shallowly equal, by using custom selector creator', () => {
+    const createShallowObjectEqualSelector = createSelectorCreator(shallowObjectEqual);
+    const fooSelector = createShallowObjectEqualSelector(i => i.foo, i => ({ a: i.a, b: i.b }));
+
+    const x = fooSelector({ foo: { a: 1, b: 2, c: 'str' } });
+    const y = fooSelector({ foo: { a: 1, b: 2, c: 'str' } });
+
+    expect(x).toBe(y);
+    expect(x).toEqual(y);
   });
 });
