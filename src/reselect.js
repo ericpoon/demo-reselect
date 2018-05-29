@@ -13,7 +13,7 @@ export function createSelector(...selectors) {
       inputUnchanged = false;
     } else {
       for (let i = 0; i < input.length; i++) {
-        if (input[i] !== prevInput[i]) {
+        if (!shallowObjectEqual(input[i], prevInput[i])) {
           inputUnchanged = false;
           break;
         }
@@ -27,4 +27,24 @@ export function createSelector(...selectors) {
     }
     return prevOutput;
   };
+}
+
+function shallowObjectEqual(a, b) {
+  if (typeof a === 'object' && typeof b === 'object') {
+    const aKeys = Object.keys(a);
+    const bKeys = Object.keys(b);
+    if (aKeys.length !== bKeys.length) {
+      return false;
+    }
+
+    for (let i = 0; i < aKeys.length; i++) {
+      if (a[aKeys] !== b[bKeys]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return a === b;
 }
